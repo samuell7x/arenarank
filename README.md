@@ -385,9 +385,13 @@ O ArenaRank foi desenvolvido para demonstrar conhecimentos em:
 * Versionamento com Git e GitHub
 
 ---
-
 ## Autor
 
 Desenvolvido por Fabricio Samuel.
 
 GitHub: [@samuell7x](https://github.com/samuell7x)
+
+---
+## Licença
+
+Este projeto está licenciado sob a licença MIT. Consulte o arquivo [LICENSE](LICENSE) para mais detalhes.
