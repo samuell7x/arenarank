@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ArenaRank | Jogadores</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="brand">
+        <span class="brand-icon">AR</span>
+        <div>
+            <h1>ArenaRank</h1>
+            <p>Competitive Manager</p>
+        </div>
+    </div>
+
+    <nav class="menu">
+        <a href="/">Dashboard</a>
+        <a class="active" href="/players">Jogadores</a>
+        <a href="/teams">Times</a>
+        <a href="/tournaments">Torneios</a>
+        <a href="#">Ranking</a>
+    </nav>
+</aside>
+
+<main class="content">
+    <header class="topbar">
+        <div>
+            <h2>Jogadores</h2>
+            <p>Gerencie os competidores cadastrados na plataforma.</p>
+        </div>
+
+        <a class="btn-primary" href="/players/new">Novo jogador</a>
+    </header>
+
+    <section class="table-card">
+        <div class="table-header">
+            <h3>Lista de jogadores</h3>
+            <span th:text="${#lists.size(players)} + ' cadastrados'">0 cadastrados</span>
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nickname</th>
+                <th>Email</th>
+                <th>Função</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="player : ${players}">
+                <td th:text="${player.id()}">1</td>
+                <td th:text="${player.nickname()}">FabricioZX</td>
+                <td th:text="${player.email()}">email@email.com</td>
+                <td>
+                    <span class="tag" th:text="${player.role()}">RUSHER</span>
+                </td>
+                <td class="actions">
+                    <a class="btn-secondary" th:href="@{/players/{id}/edit(id=${player.id()})}">Editar</a>
+
+                    <form th:action="@{/players/{id}/delete(id=${player.id()})}" method="post">
+                        <button class="btn-danger" type="submit">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(players)}">
+                <td colspan="5" class="empty">Nenhum jogador cadastrado ainda.</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ArenaRank | Torneios</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="brand">
+        <span class="brand-icon">AR</span>
+        <div>
+            <h1>ArenaRank</h1>
+            <p>Competitive Manager</p>
+        </div>
+    </div>
+
+    <nav class="menu">
+        <a href="/">Dashboard</a>
+        <a href="/players">Jogadores</a>
+        <a href="/teams">Times</a>
+        <a class="active" href="/tournaments">Torneios</a>
+        <a href="#">Ranking</a>
+    </nav>
+</aside>
+
+<main class="content">
+    <header class="topbar">
+        <div>
+            <h2>Torneios</h2>
+            <p>Crie e gerencie competições competitivas.</p>
+        </div>
+
+        <a class="btn-primary" href="/tournaments/new">Novo torneio</a>
+    </header>
+
+    <section class="table-card">
+        <div class="table-header">
+            <h3>Lista de torneios</h3>
+            <span th:text="${#lists.size(tournaments)} + ' cadastrados'">0 cadastrados</span>
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Status</th>
+                <th>Início</th>
+                <th>Término</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="tournament : ${tournaments}">
+                <td th:text="${tournament.id()}">1</td>
+                <td th:text="${tournament.name()}">Copa EnvWrd</td>
+                <td>
+                    <span class="tag" th:text="${tournament.status()}">OPEN</span>
+                </td>
+                <td th:text="${tournament.startDate()}">2026-06-20</td>
+                <td th:text="${tournament.endDate()}">2026-06-25</td>
+
+                <td class="actions">
+                    <a class="btn-secondary" th:href="@{/tournaments/{id}/edit(id=${tournament.id()})}">Editar</a>
+
+                    <form th:if="${tournament.status().name() == 'OPEN'}"
+                          th:action="@{/tournaments/{id}/start(id=${tournament.id()})}" method="post">
+                        <button class="btn-primary" type="submit">Iniciar</button>
+                    </form>
+
+                    <form th:if="${tournament.status().name() == 'IN_PROGRESS'}"
+                          th:action="@{/tournaments/{id}/finish(id=${tournament.id()})}" method="post">
+                        <button class="btn-secondary" type="submit">Finalizar</button>
+                    </form>
+
+                    <form th:action="@{/tournaments/{id}/delete(id=${tournament.id()})}" method="post">
+                        <button class="btn-danger" type="submit">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(tournaments)}">
+                <td colspan="6" class="empty">Nenhum torneio cadastrado ainda.</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ArenaRank | Time</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="brand">
+        <span class="brand-icon">AR</span>
+        <div>
+            <h1>ArenaRank</h1>
+            <p>Competitive Manager</p>
+        </div>
+    </div>
+
+    <nav class="menu">
+        <a href="/">Dashboard</a>
+        <a href="/players">Jogadores</a>
+        <a class="active" href="/teams">Times</a>
+        <a href="#">Torneios</a>
+        <a href="#">Ranking</a>
+    </nav>
+</aside>
+
+<main class="content">
+    <header class="topbar">
+        <div>
+            <h2 th:text="${formTitle}">Novo time</h2>
+            <p>Preencha os dados da equipe competitiva.</p>
+        </div>
+
+        <a class="btn-secondary" href="/teams">Voltar</a>
+    </header>
+
+    <section class="form-card">
+        <form th:action="@{${formAction}}" th:object="${team}" method="post">
+            <div class="form-group">
+                <label for="name">Nome do time</label>
+                <input id="name" type="text" th:field="*{name}" placeholder="Ex: Shadow Squad">
+                <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+            </div>
+
+            <div class="form-group">
+                <label for="tag">Tag</label>
+                <input id="tag" type="text" th:field="*{tag}" placeholder="Ex: SHDW">
+                <small th:if="${#fields.hasErrors('tag')}" th:errors="*{tag}"></small>
+            </div>
+
+            <button class="btn-primary" type="submit">Salvar time</button>
+        </form>
+    </section>
+</main>
+
+</body>
+</html>

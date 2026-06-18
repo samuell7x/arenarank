@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ArenaRank | Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="brand">
+        <span class="brand-icon">AR</span>
+        <div>
+            <h1>ArenaRank</h1>
+            <p>Competitive Manager</p>
+        </div>
+    </div>
+
+    <nav class="menu">
+        <a class="active" href="/">Dashboard</a>
+        <a href="/players">Jogadores</a>
+        <a href="/teams">Times</a>
+        <a href="/tournaments">Torneios</a>
+        <a href="#">Ranking</a>
+    </nav>
+</aside>
+
+<main class="content">
+    <header class="topbar">
+        <div>
+            <h2>Dashboard</h2>
+            <p>Gerencie torneios, jogadores e rankings competitivos.</p>
+        </div>
+
+        <a class="btn-primary" href="/players/new">Novo jogador</a>
+    </header>
+
+    <section class="hero">
+        <span class="badge">Sistema 100% Java</span>
+        <h3>Controle competitivo em um só lugar</h3>
+        <p>
+            Cadastre jogadores, forme times, crie torneios e acompanhe rankings
+            com uma interface moderna integrada ao Spring Boot.
+        </p>
+    </section>
+
+    <section class="cards">
+        <article class="card">
+            <span>Jogadores</span>
+            <strong th:text="${totalPlayers}">0</strong>
+            <p>Total cadastrado</p>
+        </article>
+
+        <article class="card">
+            <span>Times</span>
+            <strong th:text="${totalTeams}">0</strong>
+            <p>Total cadastrado</p>
+        </article>
+
+        <article class="card">
+            <span>Torneios</span>
+            <strong th:text="${totalTournaments}">0</strong>
+            <p>Total cadastrado</p>
+        </article>
+    </section>
+</main>
+
+</body>
+</html>

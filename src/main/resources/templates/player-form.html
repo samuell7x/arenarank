@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ArenaRank | Jogador</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="brand">
+        <span class="brand-icon">AR</span>
+        <div>
+            <h1>ArenaRank</h1>
+            <p>Competitive Manager</p>
+        </div>
+    </div>
+
+    <nav class="menu">
+        <a href="/">Dashboard</a>
+        <a class="active" href="/players">Jogadores</a>
+        <a href="/teams">Times</a>
+        <a href="/tournaments">Torneios</a>
+        <a href="#">Ranking</a>
+    </nav>
+</aside>
+
+<main class="content">
+    <header class="topbar">
+        <div>
+            <h2 th:text="${formTitle}">Novo jogador</h2>
+            <p>Preencha os dados do competidor.</p>
+        </div>
+
+        <a class="btn-secondary" href="/players">Voltar</a>
+    </header>
+
+    <section class="form-card">
+        <form th:action="@{${formAction}}" th:object="${player}" method="post">
+            <div class="form-group">
+                <label for="nickname">Nickname</label>
+                <input id="nickname" type="text" th:field="*{nickname}" placeholder="Ex: FabricioZX">
+                <small th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}"></small>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" type="email" th:field="*{email}" placeholder="jogador@email.com">
+                <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+            </div>
+
+            <div class="form-group">
+                <label for="role">Função</label>
+                <select id="role" th:field="*{role}">
+                    <option value="">Selecione</option>
+                    <option th:each="role : ${roles}" th:value="${role}" th:text="${role}"></option>
+                </select>
+                <small th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></small>
+            </div>
+
+            <button class="btn-primary" type="submit">Salvar jogador</button>
+        </form>
+    </section>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ArenaRank | Times</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="brand">
+        <span class="brand-icon">AR</span>
+        <div>
+            <h1>ArenaRank</h1>
+            <p>Competitive Manager</p>
+        </div>
+    </div>
+
+    <nav class="menu">
+        <a href="/">Dashboard</a>
+        <a href="/players">Jogadores</a>
+        <a class="active" href="/teams">Times</a>
+        <a href="#">Torneios</a>
+        <a href="#">Ranking</a>
+    </nav>
+</aside>
+
+<main class="content">
+    <header class="topbar">
+        <div>
+            <h2>Times</h2>
+            <p>Gerencie equipes competitivas e seus jogadores.</p>
+        </div>
+
+        <a class="btn-primary" href="/teams/new">Novo time</a>
+    </header>
+
+    <section class="table-card">
+        <div class="table-header">
+            <h3>Lista de times</h3>
+            <span th:text="${#lists.size(teams)} + ' cadastrados'">0 cadastrados</span>
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Tag</th>
+                <th>Jogadores</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="team : ${teams}">
+                <td th:text="${team.id()}">1</td>
+                <td th:text="${team.name()}">Shadow Squad</td>
+                <td>
+                    <span class="tag" th:text="${team.tag()}">SHDW</span>
+                </td>
+                <td th:text="${team.totalPlayers()} + '/4'">0/4</td>
+                <td class="actions">
+                    <a class="btn-secondary" th:href="@{/teams/{id}(id=${team.id()})}">Ver</a>
+                    <a class="btn-secondary" th:href="@{/teams/{id}/edit(id=${team.id()})}">Editar</a>
+
+                    <form th:action="@{/teams/{id}/delete(id=${team.id()})}" method="post">
+                        <button class="btn-danger" type="submit">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(teams)}">
+                <td colspan="5" class="empty">Nenhum time cadastrado ainda.</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+</body>
+</html>

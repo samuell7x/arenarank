@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ArenaRank | Detalhes do Time</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="brand">
+        <span class="brand-icon">AR</span>
+        <div>
+            <h1>ArenaRank</h1>
+            <p>Competitive Manager</p>
+        </div>
+    </div>
+
+    <nav class="menu">
+        <a href="/">Dashboard</a>
+        <a href="/players">Jogadores</a>
+        <a class="active" href="/teams">Times</a>
+        <a href="#">Torneios</a>
+        <a href="#">Ranking</a>
+    </nav>
+</aside>
+
+<main class="content">
+    <header class="topbar">
+        <div>
+            <h2 th:text="${team.name()}">Shadow Squad</h2>
+            <p>
+                Tag:
+                <strong th:text="${team.tag()}">SHDW</strong>
+                |
+                Jogadores:
+                <strong th:text="${team.totalPlayers()} + '/4'">0/4</strong>
+            </p>
+        </div>
+
+        <a class="btn-secondary" href="/teams">Voltar</a>
+    </header>
+
+    <section class="form-card">
+        <h3 class="section-title">Adicionar jogador ao time</h3>
+
+        <form th:action="@{/teams/{id}/players(id=${team.id()})}" method="post">
+            <div class="form-group">
+                <label for="playerId">Jogador</label>
+                <select id="playerId" name="playerId">
+                    <option value="">Selecione um jogador</option>
+                    <option th:each="player : ${players}"
+                            th:value="${player.id()}"
+                            th:text="${player.nickname()} + ' - ' + ${player.role()}">
+                    </option>
+                </select>
+            </div>
+
+            <button class="btn-primary" type="submit">Adicionar jogador</button>
+        </form>
+    </section>
+
+    <section class="table-card spacing-top">
+        <div class="table-header">
+            <h3>Jogadores do time</h3>
+            <span th:text="${team.totalPlayers()} + ' de 4 jogadores'">0 de 4 jogadores</span>
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nickname</th>
+                <th>Email</th>
+                <th>Função</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="player : ${team.players()}">
+                <td th:text="${player.id()}">1</td>
+                <td th:text="${player.nickname()}">FabricioZX</td>
+                <td th:text="${player.email()}">email@email.com</td>
+                <td>
+                    <span class="tag" th:text="${player.role()}">RUSHER</span>
+                </td>
+                <td class="actions">
+                    <form th:action="@{/teams/{teamId}/players/{playerId}/remove(teamId=${team.id()}, playerId=${player.id()})}" method="post">
+                        <button class="btn-danger" type="submit">Remover</button>
+                    </form>
+                </td>
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(team.players())}">
+                <td colspan="5" class="empty">Nenhum jogador neste time ainda.</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+</body>
+</html>
